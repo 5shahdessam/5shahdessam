@@ -1,0 +1,21 @@
+mkdir SHAHD ESSAM
+cd SHAHD ESSAM
+mkdir Documents
+cd Documents
+touch file1.txt file2.txt file3.txt
+ls
+cd ..
+touch .hidden_file
+nano file1.txt
+cat file1.txt
+cd Documents
+mkdir -p -
+cd -
+cp -r Documents My_Documents
+ls
+ls -a
+mv file2.txt file3.txt ..
+ls
+cd
+rm -rf SHAHD ESSAM
+ls
