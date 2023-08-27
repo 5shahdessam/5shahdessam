@@ -1,26 +1,81 @@
-sudo useradd -m -p osc_password osc
-sudo groupadd osc_group
-sudo usermod -a -G osc_group osc
-sudo visudo
-osc ALL=(ALL) ALL
-su osc
-mkdir permission_practice
+#!/bin/bash
 
-echo "This is a public file." > permission_practice/public_file.txt
-chmod 644 permission_practice/public_file.txt
+echo "Username: $(whoami)"
+echo "Kernel Version: $(uname -r)"
 
-echo "This is a private file." > permission_practice/private_file.txt
-chmod 600 permission_practice/private_file.txt
+#!/bin/bash
 
-echo "#!/bin/bash
-echo This is an executable script." > permission_practice/executable_script.sh
-chmod 755 permission_practice/executable_script.sh
+if [ -f "$1" ]; then
+  echo "File exists"
+  cat "$1"
+else
+  echo "File does not exist"
+fi
 
-chown $(whoami) permission_practice/private_file.txt
+#!/bin/bash
 
-chgrp osc_group permission_practice/private_file.txt
+if [ ! -d "$1" ]; then
+  echo "The specified directory does not exist"
+  exit 1
+fi
 
-nohup sleep 1000 &
+new_name=$2
 
-kill $(pidof sleep)
+for file in "$1"/*; do
+  new_file=$(echo "$file" | sed "s/.$1/$new_name\.$1/")
+  mv "$file" "$new_file"
+done
 
+echo "Files renamed successfully"
+
+#!/bin/bash
+
+clear
+
+echo "1. Addition"
+echo "2. Subtraction"
+echo "3. Multiplication"
+echo "4. Division"
+echo "5. Exit"
+
+read -p "Enter your choice: " choice
+
+case $choice in
+  1)
+    echo "Enter the first number: "
+    read num1
+    echo "Enter the second number: "
+    read num2
+    echo "$num1 + $num2 = $(($num1 + $num2))"
+    ;;
+  2)
+    echo "Enter the first number: "
+    read num1
+    echo "Enter the second number: "
+    read num2
+    echo "$num1 - $num2 = $(($num1 - $num2))"
+    ;;
+  3)
+    echo "Enter the first number: "
+    read num1
+    echo "Enter the second number: "
+    read num2
+    echo "$num1 * $num2 = $(($num1 * $num2))"
+    ;;
+  4)
+    echo "Enter the first number: "
+    read num1
+    echo "Enter the second number: "
+    read num2
+    echo "$num1 / $num2 = $(($num1 / $num2))"
+    ;;
+  5)
+    exit
+    ;;
+  *)
+    echo "Invalid choice"
+    ;;
+esac
+
+echo "Press enter to continue..."
+read
