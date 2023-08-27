@@ -1,0 +1,26 @@
+sudo useradd -m -p osc_password osc
+sudo groupadd osc_group
+sudo usermod -a -G osc_group osc
+sudo visudo
+osc ALL=(ALL) ALL
+su osc
+mkdir permission_practice
+
+echo "This is a public file." > permission_practice/public_file.txt
+chmod 644 permission_practice/public_file.txt
+
+echo "This is a private file." > permission_practice/private_file.txt
+chmod 600 permission_practice/private_file.txt
+
+echo "#!/bin/bash
+echo This is an executable script." > permission_practice/executable_script.sh
+chmod 755 permission_practice/executable_script.sh
+
+chown $(whoami) permission_practice/private_file.txt
+
+chgrp osc_group permission_practice/private_file.txt
+
+nohup sleep 1000 &
+
+kill $(pidof sleep)
+
